@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="WorkItems" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="WorkItems" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:a="clr-namespace:AngleSharp;assembly=AngleSharp" xmlns:ahd="clr-namespace:AngleSharp.Html.Dom;assembly=AngleSharp" xmlns:ahp="clr-namespace:AngleSharp.Html.Parser;assembly=AngleSharp" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_str_Username" Type="InArgument(x:String)" />
     <x:Property Name="in_str_Password" Type="InArgument(x:String)" />
@@ -10,10 +10,10 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>596,1552</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1409,1987</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>WorkItems_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="74">
+    <scg:List x:TypeArguments="x:String" Capacity="45">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -53,10 +53,16 @@
       <x:String>System.Collections.Specialized</x:String>
       <x:String>UiPath.Core.Activities.Storage</x:String>
       <x:String>UiPath.Core.Activities.Orchestrator</x:String>
+      <x:String>AngleSharp.Browser</x:String>
+      <x:String>AngleSharp</x:String>
+      <x:String>AngleSharp.Dom</x:String>
+      <x:String>AngleSharp.Html.Parser</x:String>
+      <x:String>AngleSharp.Html.Dom</x:String>
+      <x:String>AngleSharp.Dom.Events</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="52">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="29">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -84,22 +90,25 @@
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>AngleSharp</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="WorkItems" sap:VirtualizedContainerService.HintSize="476,1487" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="WorkItems" sap:VirtualizedContainerService.HintSize="591,1922" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="str_workflowName" />
       <Variable x:TypeArguments="x:String" Name="str_HtmlResult" />
       <Variable x:TypeArguments="x:Int32" Name="int_StatusCode" />
       <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="match_SayfaSayilari" />
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="Dictionary_Headers" />
+      <Variable x:TypeArguments="x:Int32" Name="int_indis" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign sap:VirtualizedContainerService.HintSize="549,60" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[str_workflowName]</OutArgument>
       </Assign.To>
@@ -107,9 +116,9 @@
         <InArgument x:TypeArguments="x:String" xml:space="preserve">Work Items -&gt; </InArgument>
       </Assign.Value>
     </Assign>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[str_workflowName+&quot;Başladı.&quot;]" />
-    <ui:BuildDataTable DataTable="[out_dt_ReportAll]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="434,59" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
-    <ui:HttpClient Body="{x:Null}" ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/x-www-form-urlencoded" DisplayName="HTTP Request" EnableSSLVerification="True" EndPoint="https://acme-test.uipath.com/work-items" sap:VirtualizedContainerService.HintSize="434,57" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="GET" Result="[str_HtmlResult]" StatusCode="[int_StatusCode]" TimeoutMS="20000">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="549,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[str_workflowName+&quot;Başladı.&quot;]" />
+    <ui:BuildDataTable DataTable="[out_dt_ReportAll]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="549,59" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+    <ui:HttpClient Body="{x:Null}" ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/x-www-form-urlencoded" DisplayName="HTTP Request" EnableSSLVerification="True" EndPoint="https://acme-test.uipath.com/work-items" sap:VirtualizedContainerService.HintSize="549,57" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="GET" Result="[str_HtmlResult]" StatusCode="[int_StatusCode]" TimeoutMS="20000">
       <ui:HttpClient.Attachments>
         <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
       </ui:HttpClient.Attachments>
@@ -129,16 +138,19 @@
         <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
       </ui:HttpClient.UrlSegments>
     </ui:HttpClient>
-    <ui:Matches sap:VirtualizedContainerService.HintSize="434,59" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[str_HtmlResult]" IsBuilderTabModified="False" Pattern="[&quot;(?&lt;=(test\.uipath\.com\/work-items\?page=))\d+(?=\&quot;&quot;\&gt;\d+)&quot;]" RegexOption="IgnoreCase, Multiline, Compiled" Result="[match_SayfaSayilari]" />
-    <ui:ForEach x:TypeArguments="x:Int32" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="We take all table on all pages and collect them in a datatable" DisplayName="For Each : All Pages" sap:VirtualizedContainerService.HintSize="434,721" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Enumerable.Range(1,Convert.ToInt32(match_SayfaSayilari.Last().ToString()))]">
+    <ui:Matches sap:VirtualizedContainerService.HintSize="549,59" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[str_HtmlResult]" IsBuilderTabModified="False" Pattern="[&quot;(?&lt;=(test\.uipath\.com\/work-items\?page=))\d+(?=\&quot;&quot;\&gt;\d+)&quot;]" RegexOption="IgnoreCase, Multiline, Compiled" Result="[match_SayfaSayilari]" />
+    <ui:ForEach x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="We take all table on all pages and collect them in a datatable" CurrentIndex="[int_indis]" DisplayName="For Each : All Pages" sap:VirtualizedContainerService.HintSize="549,690" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Enumerable.Range(1,Convert.ToInt32(match_SayfaSayilari.Last().ToString()))]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:Int32">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Int32" Name="sayfa" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body : For Each" sap:VirtualizedContainerService.HintSize="376,566" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Body : For Each" sap:VirtualizedContainerService.HintSize="376,535" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <Sequence.Variables>
               <Variable x:TypeArguments="sd:DataTable" Name="dt_Report" />
+              <Variable x:TypeArguments="a:IBrowsingContext" Name="Context" />
+              <Variable x:TypeArguments="ahp:IHtmlParser" Name="Parser" />
+              <Variable x:TypeArguments="ahd:IHtmlDocument" Name="Document" />
             </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -168,16 +180,13 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:HttpClient>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Converts the table in html code to datatable format." DisplayName="Invoke HTML-to-DataTable workflow" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="HTML-to-DataTable.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke XHTML-to-DT workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="XHTML-to-DT.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_str_HtmlText">[str_HtmlResult]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_str_HTML">[str_HtmlResult]</InArgument>
                 <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_Report">[dt_Report]</OutArgument>
+                <InArgument x:TypeArguments="x:Int32" x:Key="in_int_indis">[int_indis]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_str_SplitOption">tbody</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
             </ui:InvokeWorkflowFile>
             <ui:MergeDataTable sap2010:Annotation.AnnotationText="Merge dt_Report to dt_ReportAll" Destination="[out_dt_ReportAll]" DisplayName="Merge Data Table" sap:VirtualizedContainerService.HintSize="334,163" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[dt_Report]">
               <sap:WorkflowViewStateService.ViewState>
@@ -197,28 +206,68 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
-    <Sequence sap2010:Annotation.AnnotationText="{}{&quot;WIID&quot;,&quot;Type&quot;,&quot;Status&quot;} sütunları haricini siler." DisplayName="Sequence : DataTable Filter" sap:VirtualizedContainerService.HintSize="434,108" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence sap2010:Annotation.AnnotationText="{}{&quot;WIID&quot;,&quot;Type&quot;,&quot;Status&quot;} sütunları haricini siler." DisplayName="Sequence : DataTable Filter" sap:VirtualizedContainerService.HintSize="549,574" sap2010:WorkflowViewState.IdRef="Sequence_2">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="scg:List(sd:DataRow)" Name="ListDataRow_ReportAll" />
+      </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeCode ContinueOnError="{x:Null}" Code="&#x9;Dim toRemove As List(Of String) = New List(Of String)&#xA;&#x9;For Each column As DataColumn In dt.Columns&#x9;&#xA;&#x9;&#x9;If (Not varColumnsToKeep.Contains(column.ColumnName))&#xA;&#x9;&#x9;&#x9;toRemove.Add(column.ColumnName)&#xA;&#x9;&#x9;End If&#xA;&#x9;Next&#xA;&#x9;&#xA;&#x9;For Each NameToRemove As String In toRemove&#xA;&#x9;&#x9;dt.Columns.Remove(NameToRemove)&#xA;&#x9;Next" DisplayName="Invoke code" sap:VirtualizedContainerService.HintSize="334,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
-        <ui:InvokeCode.Arguments>
-          <InArgument x:TypeArguments="sd:DataTable" x:Key="dt">[out_dt_ReportAll]</InArgument>
-          <InArgument x:TypeArguments="s:String[]" x:Key="varColumnsToKeep">[{"WIID","Type","Status"}]</InArgument>
-        </ui:InvokeCode.Arguments>
-      </ui:InvokeCode>
-      <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="507,51" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+        <ui:CommentOut.Body>
+          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,256" sap2010:WorkflowViewState.IdRef="Sequence_7">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="&#x9;Dim toRemove As List(Of String) = New List(Of String)&#xA;&#x9;For Each column As DataColumn In dt.Columns&#x9;&#xA;&#x9;&#x9;If (Not varColumnsToKeep.Contains(column.ColumnName))&#xA;&#x9;&#x9;&#x9;toRemove.Add(column.ColumnName)&#xA;&#x9;&#x9;End If&#xA;&#x9;Next&#xA;&#x9;&#xA;&#x9;For Each NameToRemove As String In toRemove&#xA;&#x9;&#x9;dt.Columns.Remove(NameToRemove)&#xA;&#x9;Next" DisplayName="Invoke code" sap:VirtualizedContainerService.HintSize="334,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+              <ui:InvokeCode.Arguments>
+                <InArgument x:TypeArguments="sd:DataTable" x:Key="dt">[out_dt_ReportAll]</InArgument>
+                <InArgument x:TypeArguments="s:String[]" x:Key="varColumnsToKeep">[{"WIID","Type","Status"}]</InArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+          </Sequence>
+        </ui:CommentOut.Body>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:CommentOut>
+      <Assign DisplayName="Assign : List" sap:VirtualizedContainerService.HintSize="507,60" sap2010:WorkflowViewState.IdRef="Assign_3">
         <Assign.To>
-          <OutArgument x:TypeArguments="sd:DataTable">[out_dt_ReportAll]</OutArgument>
+          <OutArgument x:TypeArguments="scg:List(sd:DataRow)">[ListDataRow_ReportAll]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="sd:DataTable">[out_dt_ReportAll.Select("[Type]='WI5' and [Status]='Open'").CopyToDataTable()]</InArgument>
+          <InArgument x:TypeArguments="scg:List(sd:DataRow)">[out_dt_ReportAll.AsEnumerable.Where(Function(x) x.Item("Type").ToString.Equals("WI5") And x.Item("Status").ToString.Equals("Open")).ToList]</InArgument>
         </Assign.Value>
       </Assign>
+      <If Condition="[ListDataRow_ReportAll.Any]" DisplayName="If : Open &amp; WI5" sap:VirtualizedContainerService.HintSize="507,260" sap2010:WorkflowViewState.IdRef="If_2">
+        <If.Then>
+          <Assign sap2010:Annotation.AnnotationText="out_dt_ReportAll.Select(&quot;[Type]='WI5' and [Status]='Open'&quot;).CopyToDataTable()" sap:VirtualizedContainerService.HintSize="262,102" sap2010:WorkflowViewState.IdRef="Assign_6">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sd:DataTable">[out_dt_ReportAll]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sd:DataTable">[out_dt_ReportAll.AsEnumerable.Where(Function(x) x.Item("Type").ToString.Equals("WI5") And x.Item("Status").ToString.Equals("Open")).CopyToDataTable]</InArgument>
+            </Assign.Value>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Assign>
+        </If.Then>
+        <If.Else>
+          <Throw Exception="[new Exception(str_workflowName+&quot;'Open&amp;WI5' Work Items Bulunamadı.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_3" />
+        </If.Else>
+      </If>
     </Sequence>
   </Sequence>
 </Activity>
