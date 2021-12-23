@@ -1,6 +1,8 @@
 This is the 'Calculate Client Security Hash' process which is without API documentation and the 1st project for the Advanced Certification.
 
 
+https://www.youtube.com/watch?v=1_-PpuNv5Zw
+
 
 Step    Short Description
 
